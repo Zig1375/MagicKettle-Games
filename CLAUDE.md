@@ -4,6 +4,16 @@ Per-game modules for EscApp: launch settings, bottle contents and small edits to
 The design is in `../EscApp/docs/GAME-MODULES.md`; read it before changing the format. The user speaks Russian:
 answer in Russian, but files, comments and commit messages are English.
 
+## Commands
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt   # jsonschema, pinned
+.venv/bin/python -m unittest discover -s tests -t .                  # schema tests
+```
+
+Tools are Python (3.11+) so they run on Linux CI. The schemas check a module's shape only; what is allowed beyond
+it (registry branches, file types, component names, unique match keys) belongs in `tools/check`.
+
 ## Rules
 
 - Data only. Nothing here may be executable or a script a game or the system would run, and nothing may crack,

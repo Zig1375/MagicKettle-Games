@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Zig1375/EscApp-Games/main/schema/module.schema.json",
+  "title": "EscApp game module",
+  "description": "What one game needs in EscApp, as data (modules/<id>.json). The shape only: what is allowed beyond it (registry keys, file types, component names) is checked by tools/check.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "revision", "format", "name", "note", "match", "fixes"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "$ref": "#/$defs/slug", "description": "Never changes; the file is named after it." },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Bumped with every change, so EscApp sees that what it applied is out of date."
+    },
+    "format": { "const": 1, "description": "Version of this schema. An app that doesn't know it skips the module." },
+    "name": { "type": "string", "minLength": 1 },
+    "note": { "$ref": "#/$defs/note" },
+    "credits": { "$ref": "#/$defs/credits" },
+    "match": { "$ref": "#/$defs/gameMatch" },
+    "requires": { "$ref": "#/$defs/requires" },
+    "fixes": { "$ref": "#/$defs/fixes" }
+  },
+
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 64 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "Lowercase hex." },
+    "version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "note": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Why, naming the failure it fixes; for whoever maintains the module, never shown in the app."
+    },
+
+    "credits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["what", "source", "license"],
+        "properties": {
+          "what": { "type": "string", "minLength": 1 },
+          "source": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "license": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9.+-]+( (AND|OR|WITH) [A-Za-z0-9.+-]+)*$",
+            "description": "SPDX expression."
+          }
+        }
+      }
+    },
+
+    "gameMatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "description": "How EscApp finds the game, most reliable first. No two modules may share a key (tools/check).",
+      "properties": {
+        "steam": { "$ref": "#/$defs/digitIDs", "description": "Steam app ids." },
+        "gog": { "$ref": "#/$defs/digitIDs", "description": "GOG product ids, from Galaxy or goggame-<id>.info." },
+        "epic": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[^:\\s]+:[^:\\s]+:[^:\\s]+$" },
+          "description": "namespace:item:app, as EscApp stores Epic games."
+        },
+        "exe": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[^\\\\/:*?\"<>|]+\\.[eE][xX][eE]$",
+                "description": "File name, compared without case. A common one (game.exe) needs product or sha256."
+              },
+              "product": { "type": "string", "minLength": 1, "description": "ProductName from the exe's version info." },
+              "sha256": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/sha256" } }
+            }
+          }
+        }
+      }
+    },
+    "digitIDs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[0-9]+$" }
+    },
+
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "minApp": { "$ref": "#/$defs/version" },
+        "modules": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/slug" },
+          "description": "Shared modules (shared/<id>.json), applied before this one."
+        },
+        "wine": { "$ref": "#/$defs/range", "description": "A newer runtime becomes something to install." },
+        "features": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["osync"] },
+          "description": "Features of EscApp's Wine build (the runtime manifest's component features)."
+        }
+      }
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "from": { "$ref": "#/$defs/version", "description": "This version or newer." },
+        "below": { "$ref": "#/$defs/version", "description": "Older than this version." }
+      }
+    },
+
+    "fixes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/group" } },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Actions applied together when every condition in `when` holds.",
+      "anyOf": [
+        { "required": ["launch"] },
+        { "required": ["dllOverrides"] },
+        { "required": ["components"] },
+        { "required": ["registry"] },
+        { "required": ["configEdits"] },
+        { "required": ["files"] }
+      ],
+      "properties": {
+        "note": { "$ref": "#/$defs/note" },
+        "when": { "$ref": "#/$defs/when" },
+        "optional": {
+          "type": "boolean",
+          "description": "The game starts without this group when something it downloads can't be had."
+        },
+        "launch": { "$ref": "#/$defs/launch" },
+        "dllOverrides": { "$ref": "#/$defs/dllOverrides" },
+        "components": { "$ref": "#/$defs/components" },
+        "registry": { "$ref": "#/$defs/registry" },
+        "configEdits": { "$ref": "#/$defs/configEdits" },
+        "files": { "$ref": "#/$defs/files" }
+      }
+    },
+
+    "when": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "wine": { "$ref": "#/$defs/range" },
+        "exeSha256": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/sha256" } },
+        "steamBuild": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "buildid from the game's appmanifest_<id>.acf.",
+          "properties": {
+            "from": { "type": "integer", "minimum": 0 },
+            "below": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "store": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["steam", "epic", "gog", "ea", "ubisoft", "none"] },
+          "description": "none: a game from a disc, an installer or a folder."
+        },
+        "backend": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/backend" } }
+      }
+    },
+
+    "backend": { "enum": ["dxvk", "dxmt", "wined3d"] },
+    "setting": { "enum": ["auto", "on", "off"] },
+    "windows": { "enum": ["winxp", "win7", "win10", "win11"] },
+    "chromium": { "enum": ["inProcessGPU", "noGPU"] },
+    "launch": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "prefer": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "The first attempt; the usual search goes on if the game doesn't start.",
+          "properties": {
+            "backend": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/backend" } },
+            "windows": { "$ref": "#/$defs/windows" },
+            "retina": { "$ref": "#/$defs/setting" },
+            "scaling": { "$ref": "#/$defs/setting" },
+            "chromium": { "$ref": "#/$defs/chromium" },
+            "fastSync": { "type": "boolean" }
+          }
+        },
+        "require": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "Fixed, like a choice in Advanced: only for what the game can't run without.",
+          "properties": {
+            "backend": { "$ref": "#/$defs/backend" },
+            "windows": { "$ref": "#/$defs/windows" },
+            "retina": { "$ref": "#/$defs/setting" },
+            "scaling": { "$ref": "#/$defs/setting" },
+            "chromium": { "$ref": "#/$defs/chromium" },
+            "fastSync": { "type": "boolean" }
+          }
+        },
+        "arguments": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "One item per argument; they come before the player's own."
+        },
+        "environment": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^(DXVK|DXMT|MVK|MTL)_[A-Z0-9_]+$",
+            "description": "Graphics only. Wine's and the system's variables (DYLD_*, PATH, WINE*) are never allowed."
+          },
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+
+    "dllOverrides": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "For this game's exe only (Wine's AppDefaults). native means the game's own copy: a module brings no DLLs.",
+      "propertyNames": {
+        "pattern": "^[a-z0-9_-]+$",
+        "description": "Lowercase, without .dll, as Wine names them.",
+        "not": {
+          "enum": ["d3d8", "d3d9", "d3d10", "d3d10_1", "d3d10core", "d3d11", "d3d12", "dxgi", "winemetal"],
+          "description": "The backends' DLLs belong to BackendPlan."
+        }
+      },
+      "additionalProperties": { "enum": ["builtin", "native", "native,builtin", "builtin,native", "disabled"] }
+    },
+
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^([a-z0-9]+(-[a-z0-9]+)*|rtp:[A-Za-z0-9]+)$" },
+      "description": "Ids of the runtime manifest's redists (vcrun14-x64), or rtp:<name> (rtp:RPGVXAce)."
+    },
+
+    "registry": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "name"],
+        "oneOf": [
+          { "required": ["string"] },
+          { "required": ["dword"] },
+          { "required": ["qword"] },
+          { "required": ["delete"] }
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^HK(CU|LM)\\\\Software\\\\[^\\\\]+(\\\\[^\\\\]+)*$",
+            "description": "Which branches under Software are allowed is checked by tools/check."
+          },
+          "name": { "type": "string", "description": "Empty for the key's default value." },
+          "string": { "type": "string", "maxLength": 4096 },
+          "dword": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+          "qword": { "type": "integer", "minimum": 0, "maximum": 18446744073709551615 },
+          "delete": { "const": true }
+        }
+      }
+    },
+
+    "gamePath": {
+      "type": "string",
+      "pattern": "^(game|documents|appdata):(?!/)(?!(.*/)?\\.\\.(/|$))[^\\\\:*?\"<>|]+$",
+      "description": "game: the game's folder (where .escapp is); documents:, appdata: the shared profile. Forward slashes, no '..'."
+    },
+    "configEdits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "format", "set"],
+        "properties": {
+          "file": { "$ref": "#/$defs/gamePath" },
+          "format": { "enum": ["ini", "json"] },
+          "create": { "type": "boolean", "description": "Create the file with only these values if the game hasn't yet." },
+          "set": { "type": "array", "minItems": 1 }
+        },
+        "if": { "properties": { "format": { "const": "ini" } } },
+        "then": { "properties": { "set": { "items": { "$ref": "#/$defs/iniEdit" } } } },
+        "else": { "properties": { "set": { "items": { "$ref": "#/$defs/jsonEdit" } } } }
+      }
+    },
+    "iniEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["section", "key"],
+      "oneOf": [{ "required": ["value"] }, { "required": ["delete"] }],
+      "properties": {
+        "section": { "type": "string", "description": "Empty for keys before the first section." },
+        "key": { "type": "string", "minLength": 1 },
+        "value": { "type": "string" },
+        "delete": { "const": true }
+      }
+    },
+    "jsonEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "oneOf": [{ "required": ["value"] }, { "required": ["delete"] }],
+      "properties": {
+        "path": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "anyOf": [{ "type": "string" }, { "type": "integer", "minimum": 0 }] },
+          "description": "Object keys and array indexes from the root."
+        },
+        "value": {},
+        "delete": { "const": true }
+      }
+    },
+
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from"],
+        "oneOf": [
+          { "required": ["add"], "not": { "required": ["expect"] } },
+          { "required": ["replace", "expect"] }
+        ],
+        "properties": {
+          "add": { "$ref": "#/$defs/gamePath", "description": "A new file; never overwrites one the game has." },
+          "replace": { "$ref": "#/$defs/gamePath", "description": "A data file of the game, only in the version `expect` names." },
+          "expect": { "$ref": "#/$defs/sha256" },
+          "from": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*/(?!(.*/)?\\.\\.(/|$))[^\\\\:*?\"<>|]+$",
+            "description": "Path under files/. Its SHA-256 and size go into the index (tools/build-index)."
+          }
+        }
+      }
+    }
+  }
+}

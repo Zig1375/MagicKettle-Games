@@ -27,6 +27,16 @@ A fix that needs code belongs in EscApp's Wine build ([EscApp-Runtime](https://g
   the module's `credits`.
 - `games.json` — the index EscApp reads, built and committed by CI. Don't edit it by hand.
 
+## Checking modules
+
+`schema/module.schema.json` (files in `modules/`) and `schema/shared.schema.json` (files in `shared/`) describe the
+format; put `"$schema": "../schema/module.schema.json"` at the top of a module and an editor checks it as you type.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python -m unittest discover -s tests -t .
+```
+
 ## Privacy
 
 EscApp downloads the whole index and matches games on the Mac, so nobody learns which games a player has. Only a

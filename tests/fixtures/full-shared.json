@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schema/shared.schema.json",
+  "id": "unreal-4",
+  "revision": 1,
+  "format": 1,
+  "name": "Unreal Engine 4",
+  "note": "For the schema tests. Not a real fix.",
+  "match": { "engine": ["unreal"] },
+  "requires": { "modules": ["cjk-fonts"] },
+  "fixes": [{ "launch": { "prefer": { "backend": ["dxmt"] } } }]
+}

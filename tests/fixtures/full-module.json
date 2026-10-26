@@ -1,0 +1,66 @@
+{
+  "$schema": "../../schema/module.schema.json",
+  "id": "example-game",
+  "revision": 3,
+  "format": 1,
+  "name": "Example Game",
+  "note": "Every action the format has, for the schema tests. Not a real game.",
+  "credits": [{ "what": "dxvk.conf", "source": "https://example.com/dxvk.conf", "license": "CC0-1.0" }],
+  "match": {
+    "steam": ["123450"],
+    "gog": ["1234567890"],
+    "epic": ["namespace:item:app"],
+    "exe": [
+      { "name": "ExampleGame.exe", "product": "Example Game" },
+      { "name": "Game.EXE", "sha256": ["ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12ab12"] }
+    ]
+  },
+  "requires": { "minApp": "1.4.0", "modules": ["unreal-4"], "wine": { "from": "11.20" }, "features": ["osync"] },
+  "fixes": [
+    {
+      "note": "DXMT first on older Wine.",
+      "when": { "wine": { "below": "11.20" }, "store": ["steam", "none"], "steamBuild": { "from": 100 } },
+      "launch": { "prefer": { "backend": ["dxmt", "dxvk"] } }
+    },
+    {
+      "launch": {
+        "require": { "windows": "win7", "backend": "dxvk" },
+        "prefer": { "retina": "off", "scaling": "auto", "chromium": "noGPU", "fastSync": false },
+        "arguments": ["-dx11", "-mod", "My Mod"],
+        "environment": { "DXVK_FRAME_RATE": "60", "MTL_HUD_ENABLED": "1" }
+      },
+      "dllOverrides": { "xinput1_3": "builtin", "openal32": "native,builtin" },
+      "components": ["vcrun14-x64", "rtp:RPGVXAce"],
+      "registry": [
+        { "key": "HKCU\\Software\\Example Studio\\Example Game", "name": "FirstRun", "dword": 0 },
+        { "key": "HKLM\\Software\\Example Studio", "name": "", "string": "C:\\Games" },
+        { "key": "HKCU\\Software\\Example Studio", "name": "Old", "delete": true }
+      ],
+      "configEdits": [
+        {
+          "file": "game:Config/Engine.ini",
+          "format": "ini",
+          "set": [{ "section": "Display", "key": "VSync", "value": "1" }, { "section": "", "key": "Old", "delete": true }]
+        },
+        {
+          "file": "appdata:Example Studio/settings.json",
+          "format": "json",
+          "create": true,
+          "set": [{ "path": ["display", "modes", 0], "value": { "width": 1920 } }, { "path": ["intro"], "delete": true }]
+        }
+      ]
+    },
+    {
+      "optional": true,
+      "when": { "backend": ["dxvk"], "exeSha256": ["cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34cd34"] },
+      "files": [
+        { "add": "game:dxvk.conf", "from": "example-game/dxvk.conf" },
+        {
+          "replace": "game:Data/table.xml",
+          "expect": "ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56ef56",
+          "from": "example-game/table.xml"
+        }
+      ]
+    }
+  ]
+}
