@@ -1,0 +1,40 @@
+{
+ "format": 1,
+ "generated": "2026-10-27T18:50:29Z",
+ "commit": "cec5c2a2ea0b53bf728d2a08d0d289dd39bd4d50",
+ "modules": [
+  {
+   "id": "before-we-leave",
+   "revision": 2,
+   "format": 1,
+   "name": "Before We Leave",
+   "note": "Unity 2019.4, Direct3D 11. Checked on the Epic Games Store copy, Wine 11.20 (EscApp build 9), on an M2 Max.",
+   "match": {
+    "epic": [
+     "61449320f87347a8bf02159cbf8adb7f:36b11de2ebd3409f9a4435619dfa0fea:Salmon"
+    ],
+    "exe": [
+     {
+      "name": "Before We Leave.exe"
+     }
+    ]
+   },
+   "requires": {
+    "wine": {
+     "from": "11.20"
+    }
+   },
+   "fixes": [
+    {
+     "note": "With DXVK, the auto choice for Direct3D 11, the game's full-screen window stayed black: the game ran and DXVK presented, but no picture appeared. With DXMT the menu shows and the buttons work. Required, not preferred: the black window counted as a start, so DXVK was remembered as working and a preference never got its turn.",
+     "launch": {
+      "require": {
+       "backend": "dxmt"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "shared": []
+}
