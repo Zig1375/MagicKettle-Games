@@ -8,11 +8,14 @@ answer in Russian, but files, comments and commit messages are English.
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt   # jsonschema, pinned
-.venv/bin/python -m unittest discover -s tests -t .                  # schema tests
+.venv/bin/python -m unittest discover -s tests -t .                  # schema and tool tests
+.venv/bin/python -m tools.check                                      # every module, beyond its schema
+.venv/bin/python -m tools.build_index --output /tmp/games.json       # the index, as CI builds it
 ```
 
 Tools are Python (3.11+) so they run on Linux CI. The schemas check a module's shape only; what is allowed beyond
-it (registry branches, file types, component names, unique match keys) belongs in `tools/check`.
+it (registry branches, file types, component names, unique match keys) belongs in `tools/check.py`. CI
+(`.github/workflows/index.yml`) runs both on every push and commits `games.json` on `main` when a module changed.
 
 ## Rules
 

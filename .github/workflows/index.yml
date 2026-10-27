@@ -1,0 +1,41 @@
+# Checks every module and rebuilds games.json, the index EscApp downloads. On main the index is committed when a
+# module changed; a pull request only gets the checks.
+name: Index
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: [games.json]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tools
+        run: pip install -r requirements.txt
+      - name: Tests
+        run: python -m unittest discover -s tests -t .
+      - name: Check modules
+        run: python -m tools.check
+      - name: Build the index
+        run: python -m tools.build_index
+      - name: Commit the index
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git diff --quiet -- games.json && git ls-files --error-unmatch games.json >/dev/null 2>&1 && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add games.json
+          git commit -m "Rebuild the index"
+          git push

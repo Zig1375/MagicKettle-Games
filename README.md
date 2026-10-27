@@ -35,7 +35,12 @@ format; put `"$schema": "../schema/module.schema.json"` at the top of a module a
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m unittest discover -s tests -t .
+.venv/bin/python -m tools.check
 ```
+
+`tools/check.py` adds what one file's schema can't say: a file named after its id, no two modules for one game,
+no common exe name (`Game.exe`) without its product or SHA-256, shared modules that exist. On every push to `main`
+CI checks the modules and rebuilds `games.json` with `tools/build_index.py`.
 
 ## Privacy
 
