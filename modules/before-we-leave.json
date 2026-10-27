@@ -1,11 +1,12 @@
 {
   "$schema": "../schema/module.schema.json",
   "id": "before-we-leave",
-  "revision": 2,
+  "revision": 3,
   "format": 1,
   "name": "Before We Leave",
-  "note": "Unity 2019.4, Direct3D 11. Checked on the Epic Games Store copy, Wine 11.20 (EscApp build 9), on an M2 Max.",
+  "note": "Unity 2019.4, Direct3D 11. Checked on the Epic Games Store copy, Wine 11.20 (EscApp build 9), on an M2 Max. The Steam copy (1073910) is matched too but not checked yet.",
   "match": {
+    "steam": ["1073910"],
     "epic": ["61449320f87347a8bf02159cbf8adb7f:36b11de2ebd3409f9a4435619dfa0fea:Salmon"],
     "exe": [{ "name": "Before We Leave.exe" }]
   },
