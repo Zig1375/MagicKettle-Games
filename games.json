@@ -1,8 +1,42 @@
 {
  "format": 1,
- "generated": "2026-10-27T20:08:20Z",
- "commit": "e9fdf60a331b1839b20859a28bc30d50badb8b9d",
+ "generated": "2026-10-28T19:49:10Z",
+ "commit": "f1ac56b0eeed87762787bec947c8c5b0ee85778d",
  "modules": [
+  {
+   "id": "among-us",
+   "revision": 1,
+   "format": 1,
+   "name": "Among Us",
+   "note": "Unity 2022.3, Direct3D 11, Rewired for input. Checked on the Steam copy, Wine 11.20 (EscApp builds 10 and 11), on an M2 Max. On build 10 the game hung for good after its intro on every backend: its first XInput call waited for Wine's controller thread, which waited for the window lock. EscApp-Runtime build 11 fixes that in Wine (patch 0012), so nothing here works around it.",
+   "match": {
+    "steam": [
+     "945360"
+    ],
+    "exe": [
+     {
+      "name": "Among Us.exe"
+     }
+    ]
+   },
+   "requires": {
+    "wine": {
+     "from": "11.20"
+    }
+   },
+   "fixes": [
+    {
+     "note": "With XInput working, DXVK reaches the main menu and plays. D3DMetal crashed in UnityPlayer.dll right after creating its device (read of address 0x20), so DXVK goes first and D3DMetal never needs its turn. DXMT wasn't checked with XInput fixed.",
+     "launch": {
+      "prefer": {
+       "backend": [
+        "dxvk"
+       ]
+      }
+     }
+    }
+   ]
+  },
   {
    "id": "before-we-leave",
    "revision": 3,
