@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Zig1375/Plaviox-Games/main/schema/shared.schema.json",
-  "title": "Plaviox shared module",
+  "$id": "https://raw.githubusercontent.com/Zig1375/MagicKettle-Games/main/schema/shared.schema.json",
+  "title": "Magic Kettle shared module",
   "description": "What many games need (shared/<id>.json): applied to a game whose module requires it, or by itself to every game on an engine. Otherwise the same as a game module.",
   "type": "object",
   "additionalProperties": false,
@@ -24,7 +24,7 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": { "enum": ["unity", "unreal", "rpgmaker-xp", "rpgmaker-vx", "rpgmaker-vxace"] },
-          "description": "Engines Plaviox already recognises: UnityPlayer.dll, an Engine folder, Game.ini."
+          "description": "Engines Magic Kettle already recognises: UnityPlayer.dll, an Engine folder, Game.ini."
         }
       }
     },

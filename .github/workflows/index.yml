@@ -1,4 +1,4 @@
-# Checks every module and rebuilds games.json, the index Plaviox downloads. On main the index is committed when a
+# Checks every module and rebuilds games.json, the index Magic Kettle downloads. On main the index is committed when a
 # module changed; a pull request only gets the checks.
 name: Index
 

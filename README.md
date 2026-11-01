@@ -1,15 +1,15 @@
-# Plaviox-Games
+# MagicKettle-Games
 
-What particular games need to run well in [Plaviox](https://github.com/Zig1375/Plaviox): launch settings, what goes
-into their bottle, and small edits to their settings files. Plaviox downloads this repository's index once a day,
+What particular games need to run well in [Magic Kettle](https://github.com/Zig1375/MagicKettle): launch settings, what goes
+into their bottle, and small edits to their settings files. Magic Kettle downloads this repository's index once a day,
 finds the player's games in it on the Mac and applies what it says, so a fix for a game reaches every player
 without a new app release.
 
-The design is in Plaviox's `docs/GAME-MODULES.md`.
+The design is in Magic Kettle's `docs/GAME-MODULES.md`.
 
 ## Data only
 
-A module is data. Every action it can ask for is one Plaviox implements from a closed list; a module can't run
+A module is data. Every action it can ask for is one Magic Kettle implements from a closed list; a module can't run
 anything. Never accepted here, whatever the license or the intent:
 
 - executables and libraries (`.exe`, `.dll`, `.asi`, `.dylib`, `.so`, or any file with a PE or Mach-O header);
@@ -17,7 +17,7 @@ anything. Never accepted here, whatever the license or the intent:
 - cracks, DRM or anti-cheat bypasses, cheats, trainers;
 - modified game files that may not be redistributed.
 
-A fix that needs code belongs in Plaviox's Wine build ([Plaviox-Runtime](https://github.com/Zig1375/Plaviox-Runtime)).
+A fix that needs code belongs in Magic Kettle's Wine build ([MagicKettle-Runtime](https://github.com/Zig1375/MagicKettle-Runtime)).
 
 ## Layout
 
@@ -25,7 +25,7 @@ A fix that needs code belongs in Plaviox's Wine build ([Plaviox-Runtime](https:/
 - `shared/` — modules many games depend on (`cjk-fonts.json`, `unreal-4.json`), or that apply by engine.
 - `files/<slug>/` — files the `files` action adds next to a game (configs, never code), each with its license in
   the module's `credits`.
-- `games.json` — the index Plaviox reads, built and committed by CI. Don't edit it by hand.
+- `games.json` — the index Magic Kettle reads, built and committed by CI. Don't edit it by hand.
 
 ## Checking modules
 
@@ -44,7 +44,7 @@ CI checks the modules and rebuilds `games.json` with `tools/build_index.py`.
 
 ## Privacy
 
-Plaviox downloads the whole index and matches games on the Mac, so nobody learns which games a player has. Only a
+Magic Kettle downloads the whole index and matches games on the Mac, so nobody learns which games a player has. Only a
 file from `files/` is fetched one at a time, for the game that needs it, pinned by SHA-256 in the index.
 
 ## License

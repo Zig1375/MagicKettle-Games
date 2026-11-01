@@ -8,7 +8,7 @@
    "revision": 1,
    "format": 1,
    "name": "Among Us",
-   "note": "Unity 2022.3, Direct3D 11, Rewired for input. Checked on the Steam copy, Wine 11.20 (Plaviox builds 10 and 11), on an M2 Max. On build 10 the game hung for good after its intro on every backend: its first XInput call waited for Wine's controller thread, which waited for the window lock. Plaviox-Runtime build 11 fixes that in Wine (patch 0012), so nothing here works around it.",
+   "note": "Unity 2022.3, Direct3D 11, Rewired for input. Checked on the Steam copy, Wine 11.20 (Magic Kettle builds 10 and 11), on an M2 Max. On build 10 the game hung for good after its intro on every backend: its first XInput call waited for Wine's controller thread, which waited for the window lock. MagicKettle-Runtime build 11 fixes that in Wine (patch 0012), so nothing here works around it.",
    "match": {
     "steam": [
      "945360"
@@ -42,7 +42,7 @@
    "revision": 3,
    "format": 1,
    "name": "Before We Leave",
-   "note": "Unity 2019.4, Direct3D 11. Checked on the Epic Games Store copy, Wine 11.20 (Plaviox build 9), on an M2 Max. The Steam copy (1073910) is matched too but not checked yet.",
+   "note": "Unity 2019.4, Direct3D 11. Checked on the Epic Games Store copy, Wine 11.20 (Magic Kettle build 9), on an M2 Max. The Steam copy (1073910) is matched too but not checked yet.",
    "match": {
     "steam": [
      "1073910"

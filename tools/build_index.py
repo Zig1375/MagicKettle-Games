@@ -1,8 +1,8 @@
-"""Builds games.json, the index Plaviox downloads, from modules/ and shared/.
+"""Builds games.json, the index Magic Kettle downloads, from modules/ and shared/.
 
     python -m tools.build_index [--output games.json]
 
-The index holds every module whole, so Plaviox finds the player's games on the Mac without asking for any one of
+The index holds every module whole, so Magic Kettle finds the player's games on the Mac without asking for any one of
 them. `generated` and `commit` name the newest commit that changed a module, not the build, so building twice gives
 the same file and CI commits it only when a module changed. A file of the `files` action gets its SHA-256 and size
 here.
