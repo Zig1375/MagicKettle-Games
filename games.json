@@ -1,14 +1,14 @@
 {
  "format": 1,
- "generated": "2026-10-28T19:49:10Z",
- "commit": "f1ac56b0eeed87762787bec947c8c5b0ee85778d",
+ "generated": "2026-11-01T12:18:01Z",
+ "commit": "398699e3b44f33be05d45da78a0e9d8b67ff99c7",
  "modules": [
   {
    "id": "among-us",
    "revision": 1,
    "format": 1,
    "name": "Among Us",
-   "note": "Unity 2022.3, Direct3D 11, Rewired for input. Checked on the Steam copy, Wine 11.20 (EscApp builds 10 and 11), on an M2 Max. On build 10 the game hung for good after its intro on every backend: its first XInput call waited for Wine's controller thread, which waited for the window lock. EscApp-Runtime build 11 fixes that in Wine (patch 0012), so nothing here works around it.",
+   "note": "Unity 2022.3, Direct3D 11, Rewired for input. Checked on the Steam copy, Wine 11.20 (Plaviox builds 10 and 11), on an M2 Max. On build 10 the game hung for good after its intro on every backend: its first XInput call waited for Wine's controller thread, which waited for the window lock. Plaviox-Runtime build 11 fixes that in Wine (patch 0012), so nothing here works around it.",
    "match": {
     "steam": [
      "945360"
