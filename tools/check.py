@@ -2,7 +2,7 @@
 
     python -m tools.check            # prints every problem, exits 1 if there is one
 
-EscApp checks the index it downloads by the same rules and skips a module that breaks one, so what passes here is
+Plaviox checks the index it downloads by the same rules and skips a module that breaks one, so what passes here is
 what the app applies.
 """
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Zig1375/EscApp-Games/main/schema/module.schema.json",
-  "title": "EscApp game module",
-  "description": "What one game needs in EscApp, as data (modules/<id>.json). The shape only: what is allowed beyond it (registry keys, file types, component names) is checked by tools/check.",
+  "$id": "https://raw.githubusercontent.com/Zig1375/Plaviox-Games/main/schema/module.schema.json",
+  "title": "Plaviox game module",
+  "description": "What one game needs in Plaviox, as data (modules/<id>.json). The shape only: what is allowed beyond it (registry keys, file types, component names) is checked by tools/check.",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "revision", "format", "name", "note", "match", "fixes"],
@@ -12,7 +12,7 @@
     "revision": {
       "type": "integer",
       "minimum": 1,
-      "description": "Bumped with every change, so EscApp sees that what it applied is out of date."
+      "description": "Bumped with every change, so Plaviox sees that what it applied is out of date."
     },
     "format": { "const": 1, "description": "Version of this schema. An app that doesn't know it skips the module." },
     "name": { "type": "string", "minLength": 1 },
@@ -55,7 +55,7 @@
       "type": "object",
       "additionalProperties": false,
       "minProperties": 1,
-      "description": "How EscApp finds the game, most reliable first. No two modules may share a key (tools/check).",
+      "description": "How Plaviox finds the game, most reliable first. No two modules may share a key (tools/check).",
       "properties": {
         "steam": { "$ref": "#/$defs/digitIDs", "description": "Steam app ids." },
         "gog": { "$ref": "#/$defs/digitIDs", "description": "GOG product ids, from Galaxy or goggame-<id>.info." },
@@ -64,7 +64,7 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": { "type": "string", "pattern": "^[^:\\s]+:[^:\\s]+:[^:\\s]+$" },
-          "description": "namespace:item:app, as EscApp stores Epic games."
+          "description": "namespace:item:app, as Plaviox stores Epic games."
         },
         "exe": {
           "type": "array",
@@ -112,7 +112,7 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": { "enum": ["osync"] },
-          "description": "Features of EscApp's Wine build (the runtime manifest's component features)."
+          "description": "Features of Plaviox's Wine build (the runtime manifest's component features)."
         }
       }
     },
@@ -292,7 +292,7 @@
     "gamePath": {
       "type": "string",
       "pattern": "^(game|documents|appdata):(?!/)(?!(.*/)?\\.\\.(/|$))[^\\\\:*?\"<>|]+$",
-      "description": "game: the game's folder (where .escapp is); documents:, appdata: the shared profile. Forward slashes, no '..'."
+      "description": "game: the game's folder (where .plaviox is); documents:, appdata: the shared profile. Forward slashes, no '..'."
     },
     "configEdits": {
       "type": "array",
