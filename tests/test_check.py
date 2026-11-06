@@ -57,6 +57,41 @@ class Repository(unittest.TestCase):
         self.write("modules", "one.json", broken)
         self.assertTrue(any("doesn't exist" in line for line in self.check()))
 
+    def cover_module(self, picture=b"\x89PNG\r\n\x1a\n" + b"0" * 100, credits=True, **match):
+        content = module("one", **(match or {"product": ["One Manager"]}))
+        content.pop("fixes")
+        content["cover"] = {"from": "one/cover.png"}
+        if credits:
+            content["credits"] = [{"what": "cover", "source": "https://example.com", "license": "MIT"}]
+        if picture is not None:
+            (self.root / "files" / "one").mkdir(exist_ok=True)
+            (self.root / "files" / "one" / "cover.png").write_bytes(picture)
+        self.write("modules", "one.json", content)
+
+    def test_a_cover_is_a_credited_picture_that_exists(self):
+        self.cover_module()
+        self.assertEqual(self.check(), [])
+        index = build(load_modules(self.root), "abc", "2026-10-27T00:00:00Z", self.root)
+        cover = index["modules"][0]["cover"]
+        self.assertEqual((cover["size"], len(cover["sha256"])), (108, 64))
+        self.cover_module(picture=b"MZ" + b"0" * 100)
+        self.assertTrue(any("isn't a PNG or JPEG" in line for line in self.check()))
+        self.cover_module(credits=False)
+        self.assertTrue(any("needs a credits entry" in line for line in self.check()))
+        self.cover_module(picture=b"\xff\xd8\xff" + b"0" * (1024 * 1024))
+        self.assertTrue(any("larger than" in line for line in self.check()))
+        (self.root / "files" / "one" / "cover.png").unlink()
+        self.cover_module(picture=None)
+        self.assertTrue(any("doesn't exist" in line for line in self.check()))
+
+    def test_a_product_alone_must_be_one_programs(self):
+        self.cover_module(product=["Launcher"])
+        self.assertTrue(any("too common" in line for line in self.check()))
+        self.cover_module()
+        two = module("two", product=["one manager"])
+        self.write("modules", "two.json", two)
+        self.assertTrue(any("match.product" in line and "is also in" in line for line in self.check()))
+
     def test_schema_errors_are_reported(self):
         broken = module("one")
         broken["format"] = 2

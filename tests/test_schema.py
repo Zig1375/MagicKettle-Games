@@ -33,6 +33,18 @@ class ValidModules(unittest.TestCase):
         }
         self.assertEqual(errors("modules", module), [])
 
+    def test_cover_without_fixes(self):
+        module = {
+            "id": "manager", "revision": 1, "format": 1, "name": "Manager", "note": "Why.",
+            "match": {"product": ["Manager"]}, "cover": {"from": "manager/cover.png"},
+        }
+        self.assertEqual(errors("modules", module), [])
+        self.assertNotEqual(errors("modules", changed(module, lambda m: m.pop("cover"))), [])
+        for picture in ("manager/cover.gif", "cover.png", "manager/../x.png"):
+            with self.subTest(picture):
+                broken = changed(module, lambda m: m["cover"].update(**{"from": picture}))
+                self.assertNotEqual(errors("modules", broken), [])
+
     def test_shared_module_without_match(self):
         shared = changed(load("full-shared.json"), lambda m: m.pop("match"))
         self.assertEqual(errors("shared", shared), [])

@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/module.schema.json",
+  "id": "gale",
+  "revision": 1,
+  "format": 1,
+  "name": "Gale",
+  "note": "Gale, a Thunderstore mod manager. Its ProductName, \"Gale\" (productName in its src-tauri/tauri.conf.json), is too common a word to go by alone, so it is found with its exe's name, gale.exe, as its installer put it in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+  "credits": [
+    {
+      "what": "cover, made from Gale's icon (images/icons/app-icon.png)",
+      "source": "https://github.com/Kesomannen/gale",
+      "license": "GPL-3.0-only"
+    }
+  ],
+  "match": {
+    "exe": [
+      {
+        "name": "gale.exe",
+        "product": "Gale"
+      }
+    ]
+  },
+  "cover": {
+    "from": "gale/cover.png"
+  }
+}

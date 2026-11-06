@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/module.schema.json",
+  "id": "nexus-mods-app",
+  "revision": 1,
+  "format": 1,
+  "name": "Nexus Mods App",
+  "note": "The Nexus Mods app. It sets no ProductName of its own, so .NET writes its assembly name, \"NexusMods.App\" (src/NexusMods.App/NexusMods.App.csproj and Directory.Build.props set none). Not yet checked on a real copy in Magic Kettle: only the cover depends on it. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+  "credits": [
+    {
+      "what": "cover, made from the app's icon (Nexus-Icon.png)",
+      "source": "https://github.com/Nexus-Mods/NexusMods.App",
+      "license": "GPL-3.0-only"
+    }
+  ],
+  "match": {
+    "product": [
+      "NexusMods.App"
+    ]
+  },
+  "cover": {
+    "from": "nexus-mods-app/cover.png"
+  }
+}

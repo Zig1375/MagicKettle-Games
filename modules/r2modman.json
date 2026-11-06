@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/module.schema.json",
+  "id": "r2modman",
+  "revision": 1,
+  "format": 1,
+  "name": "r2modman",
+  "note": "r2modman, the Thunderstore mod manager. Its one-file download carries its version in its name (r2modman-3.2.21.exe), so it is found by its ProductName, \"r2modman\", checked on 3.2.21 in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+  "credits": [
+    {
+      "what": "cover, made from r2modman's icon (public/icon.png)",
+      "source": "https://github.com/ebkr/r2modmanPlus",
+      "license": "MIT"
+    }
+  ],
+  "match": {
+    "product": [
+      "r2modman"
+    ]
+  },
+  "cover": {
+    "from": "r2modman/cover.png"
+  }
+}

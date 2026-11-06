@@ -5,7 +5,8 @@
   "description": "What one game needs in Magic Kettle, as data (modules/<id>.json). The shape only: what is allowed beyond it (registry keys, file types, component names) is checked by tools/check.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "revision", "format", "name", "note", "match", "fixes"],
+  "required": ["id", "revision", "format", "name", "note", "match"],
+  "anyOf": [{ "required": ["fixes"] }, { "required": ["cover"] }],
   "properties": {
     "$schema": { "type": "string" },
     "id": { "$ref": "#/$defs/slug", "description": "Never changes; the file is named after it." },
@@ -20,7 +21,8 @@
     "credits": { "$ref": "#/$defs/credits" },
     "match": { "$ref": "#/$defs/gameMatch" },
     "requires": { "$ref": "#/$defs/requires" },
-    "fixes": { "$ref": "#/$defs/fixes" }
+    "fixes": { "$ref": "#/$defs/fixes" },
+    "cover": { "$ref": "#/$defs/cover" }
   },
 
   "$defs": {
@@ -65,6 +67,13 @@
           "uniqueItems": true,
           "items": { "type": "string", "pattern": "^[^:\\s]+:[^:\\s]+:[^:\\s]+$" },
           "description": "namespace:item:app, as Magic Kettle stores Epic games."
+        },
+        "product": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "ProductName from the exe's version info, whatever the file is called: for a program whose download carries its version in its name (r2modman-3.2.21.exe). Compared without case; a common one (Game, Launcher) is refused (tools/check)."
         },
         "exe": {
           "type": "array",
@@ -127,6 +136,19 @@
     },
 
     "fixes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/group" } },
+    "cover": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from"],
+      "description": "The picture on the game's card in the library, for a program that has no store cover: a mod manager shows only its small icon otherwise. Upright, 600 x 900; a cover the player chose wins.",
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*/(?!(.*/)?\\.\\.(/|$))[^\\\\:*?\"<>|]+\\.(png|jpg)$",
+          "description": "Path under files/, a PNG or JPEG. Its SHA-256 and size go into the index (tools/build-index)."
+        }
+      }
+    },
     "group": {
       "type": "object",
       "additionalProperties": false,

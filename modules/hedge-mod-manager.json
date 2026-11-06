@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/module.schema.json",
+  "id": "hedge-mod-manager",
+  "revision": 1,
+  "format": 1,
+  "name": "Hedge Mod Manager",
+  "note": "HedgeModManager, the mod manager for Sonic games. Version 7 says \"Hedge Mod Manager\" (its AssemblyInfo.cs); version 8 is a single-file .NET program whose exe carries its main assembly's name, \"HedgeModManager.UI\", checked on 8.0.0 beta 7 in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+  "credits": [
+    {
+      "what": "cover, made from HedgeModManager's logo (Source/HedgeModManager.UI/Assets/Graphics/logo.png)",
+      "source": "https://github.com/hedge-dev/HedgeModManager",
+      "license": "MIT"
+    }
+  ],
+  "match": {
+    "product": [
+      "Hedge Mod Manager",
+      "HedgeModManager.UI"
+    ]
+  },
+  "cover": {
+    "from": "hedge-mod-manager/cover.png"
+  }
+}

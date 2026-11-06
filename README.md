@@ -25,6 +25,9 @@ A fix that needs code belongs in Magic Kettle's Wine build ([MagicKettle-Runtime
 - `shared/` — modules many games depend on (`cjk-fonts.json`, `unreal-4.json`), or that apply by engine.
 - `files/<slug>/` — files the `files` action adds next to a game (configs, never code), each with its license in
   the module's `credits`.
+  A module's `cover` lives there too: the picture on the program's card in the library (600 × 900, PNG or JPEG, at
+  most 1 MB), for a program without a store cover such as a mod manager. Covers are made for Magic Kettle from the
+  program's own logo, under that logo's license.
 - `games.json` — the index Magic Kettle reads, built and committed by CI. Don't edit it by hand.
 
 ## Checking modules
@@ -39,13 +42,15 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 ```
 
 `tools/check.py` adds what one file's schema can't say: a file named after its id, no two modules for one game,
-no common exe name (`Game.exe`) without its product or SHA-256, shared modules that exist. On every push to `main`
+no common exe name (`Game.exe`) without its product or SHA-256, no common ProductName (`Launcher`) matched alone,
+covers that are credited pictures, shared modules that exist. On every push to `main`
 CI checks the modules and rebuilds `games.json` with `tools/build_index.py`.
 
 ## Privacy
 
 Magic Kettle downloads the whole index and matches games on the Mac, so nobody learns which games a player has. Only a
-file from `files/` is fetched one at a time, for the game that needs it, pinned by SHA-256 in the index.
+file from `files/` (an action's file or a cover) is fetched one at a time, for the game that needs it, pinned by
+SHA-256 in the index.
 
 ## License
 

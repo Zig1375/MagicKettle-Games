@@ -5,7 +5,7 @@
 The index holds every module whole, so Magic Kettle finds the player's games on the Mac without asking for any one of
 them. `generated` and `commit` name the newest commit that changed a module, not the build, so building twice gives
 the same file and CI commits it only when a module changed. A file of the `files` action gets its SHA-256 and size
-here.
+here, and so does a module's cover.
 """
 
 import argparse
@@ -35,11 +35,14 @@ def last_change(paths, root=ROOT):
 
 
 def with_file_pins(module, root=ROOT):
-    for group in module["fixes"]:
-        for entry in group.get("files", []):
-            data = (root / "files" / entry["from"]).read_bytes()
-            entry["sha256"] = hashlib.sha256(data).hexdigest()
-            entry["size"] = len(data)
+    entries = [entry for group in module.get("fixes", []) for entry in group.get("files", [])]
+    if "cover" in module:
+        module["cover"] = dict(module["cover"])
+        entries.append(module["cover"])
+    for entry in entries:
+        data = (root / "files" / entry["from"]).read_bytes()
+        entry["sha256"] = hashlib.sha256(data).hexdigest()
+        entry["size"] = len(data)
     return module
 
 
