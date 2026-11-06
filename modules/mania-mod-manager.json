@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/module.schema.json",
+  "id": "mania-mod-manager",
+  "revision": 1,
+  "format": 1,
+  "name": "Mania Mod Manager",
+  "note": "ManiaModManager, from Sonic Retro's Sonic Mania mod loader. It works on the folder it is in, so it sits in Sonic Mania's folder. Found by its ProductName, \"ManiaModManager\" (AssemblyProduct in its Properties/AssemblyInfo.cs); not yet read from a real copy. Its repository has no license, so the cover leaves its icon to the player's own exe. The cover is Magic Kettle's own, with no art of anyone else's: the program's name on a background of its own colours, with room in the rings for the program's icon, which the app takes from the player's own exe (cover.icon). Without one its card showed only the small icon from the exe.",
+  "credits": [
+    {
+      "what": "cover, made for Magic Kettle without any third-party art",
+      "source": "https://github.com/Zig1375/MagicKettle-Games",
+      "license": "Apache-2.0"
+    }
+  ],
+  "match": {
+    "product": [
+      "ManiaModManager"
+    ]
+  },
+  "cover": {
+    "from": "mania-mod-manager/cover.png",
+    "icon": {
+      "x": 0.5,
+      "y": 0.36,
+      "size": 0.33
+    }
+  }
+}

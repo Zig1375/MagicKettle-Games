@@ -146,6 +146,17 @@
           "type": "string",
           "pattern": "^[a-z0-9]+(-[a-z0-9]+)*/(?!(.*/)?\\.\\.(/|$))[^\\\\:*?\"<>|]+\\.(png|jpg)$",
           "description": "Path under files/, a PNG or JPEG. Its SHA-256 and size go into the index (tools/build-index)."
+        },
+        "icon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "size"],
+          "description": "Where Magic Kettle draws the program's own icon, taken from the player's exe on their Mac, over the cover: for a program whose icon this repository may not carry (no license, or a character that isn't the project's). Fractions of the cover: x and y of the icon's centre from the top left, size of its side to the cover's width.",
+          "properties": {
+            "x": { "type": "number", "minimum": 0, "maximum": 1 },
+            "y": { "type": "number", "minimum": 0, "maximum": 1 },
+            "size": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+          }
         }
       }
     },

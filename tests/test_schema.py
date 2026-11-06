@@ -40,6 +40,12 @@ class ValidModules(unittest.TestCase):
         }
         self.assertEqual(errors("modules", module), [])
         self.assertNotEqual(errors("modules", changed(module, lambda m: m.pop("cover"))), [])
+        with_icon = changed(module, lambda m: m["cover"].update(icon={"x": 0.5, "y": 0.36, "size": 0.33}))
+        self.assertEqual(errors("modules", with_icon), [])
+        for icon in ({"x": 0.5, "y": 0.36}, {"x": 1.5, "y": 0.36, "size": 0.3}, {"x": 0.5, "y": 0.5, "size": 0}):
+            with self.subTest(icon=icon):
+                broken = changed(module, lambda m: m["cover"].update(icon=icon))
+                self.assertNotEqual(errors("modules", broken), [])
         for picture in ("manager/cover.gif", "cover.png", "manager/../x.png"):
             with self.subTest(picture):
                 broken = changed(module, lambda m: m["cover"].update(**{"from": picture}))
