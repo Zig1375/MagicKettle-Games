@@ -1,7 +1,7 @@
 {
  "format": 1,
- "generated": "2026-11-06T16:44:06Z",
- "commit": "a9878f047788e5c07056acd8b1cce31e4b5f7d57",
+ "generated": "2026-11-06T19:46:52Z",
+ "commit": "6e44ccf3b05424dc05e0e311908bb38e56e5f9e8",
  "modules": [
   {
    "id": "among-us",
@@ -125,6 +125,35 @@
    }
   },
   {
+   "id": "mania-mod-manager",
+   "revision": 1,
+   "format": 1,
+   "name": "Mania Mod Manager",
+   "note": "ManiaModManager, from Sonic Retro's Sonic Mania mod loader. It works on the folder it is in, so it sits in Sonic Mania's folder. Found by its ProductName, \"ManiaModManager\" (AssemblyProduct in its Properties/AssemblyInfo.cs); not yet read from a real copy. Its repository has no license, so the cover leaves its icon to the player's own exe. The cover is Magic Kettle's own, with no art of anyone else's: the program's name on a background of its own colours, with room in the rings for the program's icon, which the app takes from the player's own exe (cover.icon). Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made for Magic Kettle without any third-party art",
+     "source": "https://github.com/Zig1375/MagicKettle-Games",
+     "license": "Apache-2.0"
+    }
+   ],
+   "match": {
+    "product": [
+     "ManiaModManager"
+    ]
+   },
+   "cover": {
+    "from": "mania-mod-manager/cover.png",
+    "icon": {
+     "x": 0.5,
+     "y": 0.36,
+     "size": 0.33
+    },
+    "sha256": "d47ea413144c3d343d1b36ecf8290b46ad95236bd492ac063427cab18cdf36cd",
+    "size": 318761
+   }
+  },
+  {
    "id": "nexus-mods-app",
    "revision": 1,
    "format": 1,
@@ -170,6 +199,35 @@
     "from": "r2modman/cover.png",
     "sha256": "b0e184fc8e50d5b910e44dac1cc1bfba1c99dac5bc1e904ea537313f506378eb",
     "size": 304963
+   }
+  },
+  {
+   "id": "sa-mod-manager",
+   "revision": 1,
+   "format": 1,
+   "name": "SA Mod Manager",
+   "note": "SA Mod Manager (X-Hax), the mod manager for Sonic Adventure DX and Sonic Adventure 2. Found by its ProductName, \"SAModManager\", read from SAModManager.exe of release 1.3.7. Its own icon is Sonic's head, Sega's character, which X-Hax's MIT license doesn't cover, so the cover leaves it to the player's own exe. The cover is Magic Kettle's own, with no art of anyone else's: the program's name on a background of its own colours, with room in the rings for the program's icon, which the app takes from the player's own exe (cover.icon). Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made for Magic Kettle without any third-party art",
+     "source": "https://github.com/Zig1375/MagicKettle-Games",
+     "license": "Apache-2.0"
+    }
+   ],
+   "match": {
+    "product": [
+     "SAModManager"
+    ]
+   },
+   "cover": {
+    "from": "sa-mod-manager/cover.png",
+    "icon": {
+     "x": 0.5,
+     "y": 0.36,
+     "size": 0.33
+    },
+    "sha256": "8f9515b40e7381b546e9b578fb923f28928f3527c87782ca95ec3b97428f101f",
+    "size": 322779
    }
   }
  ],
