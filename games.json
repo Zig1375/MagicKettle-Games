@@ -1,7 +1,7 @@
 {
  "format": 1,
- "generated": "2026-11-01T12:18:01Z",
- "commit": "398699e3b44f33be05d45da78a0e9d8b67ff99c7",
+ "generated": "2026-11-06T16:44:06Z",
+ "commit": "a9878f047788e5c07056acd8b1cce31e4b5f7d57",
  "modules": [
   {
    "id": "among-us",
@@ -71,6 +71,106 @@
      }
     }
    ]
+  },
+  {
+   "id": "gale",
+   "revision": 1,
+   "format": 1,
+   "name": "Gale",
+   "note": "Gale, a Thunderstore mod manager. Its ProductName, \"Gale\" (productName in its src-tauri/tauri.conf.json), is too common a word to go by alone, so it is found with its exe's name, gale.exe, as its installer put it in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made from Gale's icon (images/icons/app-icon.png)",
+     "source": "https://github.com/Kesomannen/gale",
+     "license": "GPL-3.0-only"
+    }
+   ],
+   "match": {
+    "exe": [
+     {
+      "name": "gale.exe",
+      "product": "Gale"
+     }
+    ]
+   },
+   "cover": {
+    "from": "gale/cover.png",
+    "sha256": "eec76eef67e108726c277161fde840f0a770c4a7f5f6b291be10907a286e5ace",
+    "size": 309908
+   }
+  },
+  {
+   "id": "hedge-mod-manager",
+   "revision": 1,
+   "format": 1,
+   "name": "Hedge Mod Manager",
+   "note": "HedgeModManager, the mod manager for Sonic games. Version 7 says \"Hedge Mod Manager\" (its AssemblyInfo.cs); version 8 is a single-file .NET program whose exe carries its main assembly's name, \"HedgeModManager.UI\", checked on 8.0.0 beta 7 in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made from HedgeModManager's logo (Source/HedgeModManager.UI/Assets/Graphics/logo.png)",
+     "source": "https://github.com/hedge-dev/HedgeModManager",
+     "license": "MIT"
+    }
+   ],
+   "match": {
+    "product": [
+     "Hedge Mod Manager",
+     "HedgeModManager.UI"
+    ]
+   },
+   "cover": {
+    "from": "hedge-mod-manager/cover.png",
+    "sha256": "1ed092d3d30954acde1260a164972aa7566deb741d8959daace87919462ab171",
+    "size": 361682
+   }
+  },
+  {
+   "id": "nexus-mods-app",
+   "revision": 1,
+   "format": 1,
+   "name": "Nexus Mods App",
+   "note": "The Nexus Mods app. It sets no ProductName of its own, so .NET writes its assembly name, \"NexusMods.App\" (src/NexusMods.App/NexusMods.App.csproj and Directory.Build.props set none). Not yet checked on a real copy in Magic Kettle: only the cover depends on it. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made from the app's icon (Nexus-Icon.png)",
+     "source": "https://github.com/Nexus-Mods/NexusMods.App",
+     "license": "GPL-3.0-only"
+    }
+   ],
+   "match": {
+    "product": [
+     "NexusMods.App"
+    ]
+   },
+   "cover": {
+    "from": "nexus-mods-app/cover.png",
+    "sha256": "9c5853c4b097e86899492a461ca03b680a19eaa0650b51dba92ee5ede90217ca",
+    "size": 314744
+   }
+  },
+  {
+   "id": "r2modman",
+   "revision": 1,
+   "format": 1,
+   "name": "r2modman",
+   "note": "r2modman, the Thunderstore mod manager. Its one-file download carries its version in its name (r2modman-3.2.21.exe), so it is found by its ProductName, \"r2modman\", checked on 3.2.21 in Magic Kettle. The cover is Magic Kettle's own: the program's logo from its repository on a background in its colours, with its name. Without one its card showed only the small icon from the exe.",
+   "credits": [
+    {
+     "what": "cover, made from r2modman's icon (public/icon.png)",
+     "source": "https://github.com/ebkr/r2modmanPlus",
+     "license": "MIT"
+    }
+   ],
+   "match": {
+    "product": [
+     "r2modman"
+    ]
+   },
+   "cover": {
+    "from": "r2modman/cover.png",
+    "sha256": "b0e184fc8e50d5b910e44dac1cc1bfba1c99dac5bc1e904ea537313f506378eb",
+    "size": 304963
+   }
   }
  ],
  "shared": []
