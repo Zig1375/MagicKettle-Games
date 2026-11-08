@@ -1,10 +1,10 @@
 {
   "$schema": "../schema/module.schema.json",
   "id": "vortex",
-  "revision": 1,
+  "revision": 2,
   "format": 1,
   "name": "Vortex",
-  "note": "Vortex, the Nexus Mods mod manager. Found by its ProductName, \"Vortex\", read from its 2.10.1 installer in Magic Kettle. The cover is an original amber background with the program name and space for its icon. The icon is read from the player’s own exe (cover.icon), not redistributed. Previously its card showed only the small executable icon.",
+  "note": "Vortex, the Nexus Mods mod manager. Found by its ProductName, \"Vortex\", read from its 2.10.1 installer in Magic Kettle. The cover is an original amber background with the program name and space for its icon. The icon is read from the player’s own exe (cover.icon), not redistributed. Previously its card showed only the small executable icon. Revision 2 enlarges the executable icon from 33% to 52% of the cover width so it reads clearly at library-card size.",
   "credits": [
     {
       "what": "cover, made for Magic Kettle without any third-party art",
@@ -22,7 +22,7 @@
     "icon": {
       "x": 0.5,
       "y": 0.36,
-      "size": 0.33
+      "size": 0.52
     }
   }
 }
